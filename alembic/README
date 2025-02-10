@@ -1,0 +1,23 @@
+Generic single-database configuration.
+
+To change existing fields change the fields or table in the class:
+
+class EmployeeCreate(BaseModel):
+    first_name: str
+    last_name: str
+    salary: float
+    weekly_hours: float
+    company_id: int
+
+And then create the migration with 
+
+```
+alembic revision --autogenerate -m "Added first_name and last_name to employees"
+```
+
+and then apply the migration with:
+
+```
+alembic upgrade head
+```
+
