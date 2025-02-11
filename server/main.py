@@ -2,7 +2,6 @@ from fastapi import FastAPI, Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from server.database import Base
-from server.models.company import Company
 from server.models.meeting import Meeting
 from server.models.employee import Employee
 from pydantic import BaseModel, validator
@@ -26,15 +25,11 @@ def get_db():
     finally:
         db.close()
 
-class CompanyCreate(BaseModel):
-    name: str
-
 class EmployeeCreate(BaseModel):
     first_name: str
     last_name: str
     salary: float
     weekly_hours: float
-    company_id: int
 
     class Config:
         orm_mode = True
@@ -43,23 +38,10 @@ class MeetingCreate(BaseModel):
     title: str
     description: str
     date: Optional[datetime] = None
-    company_id: int
 
     @validator('date', pre=True, always=True)
     def set_date(cls, v):
         return v or datetime.now() 
-
-@app.post("/companies/", response_model=CompanyCreate)
-def create_company(company: CompanyCreate, db: Session = Depends(get_db)):
-    db_company = Company(name=company.name)
-    db.add(db_company)
-    db.commit()
-    db.refresh(db_company)
-    return db_company
-
-@app.get("/companies/", response_model=List[CompanyCreate])
-def get_companies(db: Session = Depends(get_db)):
-    return db.query(Company).all()
 
 @app.post("/employees/", response_model=EmployeeCreate)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
@@ -68,7 +50,6 @@ def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
         last_name=employee.last_name,
         salary=employee.salary,
         weekly_hours=employee.weekly_hours,
-        company_id=employee.company_id
     )
     db.add(db_employee)
     db.commit()
@@ -85,7 +66,6 @@ def create_meeting(meeting: MeetingCreate, db: Session = Depends(get_db)):
         title=meeting.title,
         description=meeting.description,
         date=datetime.now(),
-        company_id=meeting.company_id
     )
     db.add(db_meeting)
     db.commit()

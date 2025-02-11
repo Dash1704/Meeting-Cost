@@ -11,7 +11,5 @@ class Employee(Base):
     last_name = Column(String(255))
     salary = Column(Float)
     weekly_hours = Column(Float)
-    company_id = Column(Integer, ForeignKey("companies.id"))
 
-    company = relationship("Company", back_populates="employees")
     meetings = relationship("Meeting", secondary=meeting_employee_association, back_populates="attendees")

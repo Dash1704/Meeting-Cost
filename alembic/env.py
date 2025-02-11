@@ -3,7 +3,6 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from server.models.company import Company
 from server.models.employee import Employee
 from server.models.meeting import Meeting
 from server.database import Base
