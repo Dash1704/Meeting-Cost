@@ -28,20 +28,16 @@ def get_db():
 class EmployeeCreate(BaseModel):
     first_name: str
     last_name: str
-    salary: float
-    weekly_hours: float
+    salary: int
+    weekly_hours: int
 
-    class Config:
-        orm_mode = True
+    # class Config:
+    #     orm_mode = True
 
 class MeetingCreate(BaseModel):
     title: str
-    description: str
-    date: Optional[datetime] = None
-
-    @validator('date', pre=True, always=True)
-    def set_date(cls, v):
-        return v or datetime.now() 
+    start_time: Optional[datetime] = None
+    stop_time: Optional[datetime] = None
 
 @app.post("/employees/", response_model=EmployeeCreate)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
@@ -64,8 +60,8 @@ def get_employees(db: Session = Depends(get_db)):
 def create_meeting(meeting: MeetingCreate, db: Session = Depends(get_db)):
     db_meeting = Meeting(
         title=meeting.title,
-        description=meeting.description,
-        date=datetime.now(),
+        start_time=datetime.now(),
+        stop_time=datetime.now()
     )
     db.add(db_meeting)
     db.commit()
