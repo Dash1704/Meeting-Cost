@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from server.database import Base
-from server.models.meeting import meeting_employee_association 
+from server.models.meeting import employee_meeting_association 
 
 class Employee(Base):
     __tablename__ = "employees"
@@ -12,4 +12,4 @@ class Employee(Base):
     salary = Column(Float)
     weekly_hours = Column(Float)
 
-    meetings = relationship("Meeting", secondary=meeting_employee_association, back_populates="attendees")
+    meetings = relationship("Meeting", secondary=employee_meeting_association, back_populates="attendees")
