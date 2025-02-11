@@ -31,9 +31,6 @@ class EmployeeCreate(BaseModel):
     salary: int
     weekly_hours: int
 
-    # class Config:
-    #     orm_mode = True
-
 class MeetingCreate(BaseModel):
     title: str
     start_time: Optional[datetime] = None
