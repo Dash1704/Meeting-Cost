@@ -10,6 +10,11 @@ class MeetingBase(BaseModel):
 class MeetingCreate(MeetingBase):
     pass
 
+class MeetingUpdate(BaseModel):
+    title: Optional[str] = None
+    start_time: Optional[datetime] = None
+    stop_time: Optional[datetime] = None
+
 class Meeting(MeetingBase):
     id: int
 
