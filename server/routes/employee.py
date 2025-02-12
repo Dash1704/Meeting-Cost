@@ -10,6 +10,14 @@ router = APIRouter()
 def get_employees(db: Session = Depends(get_db)):
     return db.query(Employee).all()
 
+@router.get("/{employee_id}", response_model=EmployeeSchema)
+def get_employee(employee_id: int, db: Session = Depends(get_db)):
+    db_employee = db.query(Employee).filter(Employee.id == employee_id).first()
+
+    if db_employee is None:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    return db_employee
+
 @router.post("/", response_model=EmployeeSchema)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     db_employee = Employee(
