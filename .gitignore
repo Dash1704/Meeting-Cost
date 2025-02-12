@@ -1,5 +1,4 @@
 # Python
-server/__pycache__/
 server/*.pyc
 server/*.pyo
 server/*.pyd
@@ -7,6 +6,8 @@ server/*.db
 server/*.sqlite3
 server/*.log
 server/env/
+__pycache__
+
 
 # Node.js
 client/node_modules/
