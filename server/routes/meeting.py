@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from server.schemas.meeting import MeetingCreate, Meeting as MeetingSchema, MeetingUpdate
+from server.schemas.meeting import MeetingCreate, MeetingUpdate, Meeting as MeetingSchema
 from server.models.meeting import Meeting
 from server.database import get_db
 from datetime import datetime
