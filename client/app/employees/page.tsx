@@ -16,26 +16,16 @@ export default function ShowEmployees() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/v1/employees/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch employees');
+    fetch('http://localhost:8000/api/v1/employees/')
+      .then((response) => {
+        if(!response.ok){
+          throw new Error("Failed to fetch employee");
         }
-        const data = await response.json();
-        setEmployees(data);
-      } catch (error) {
-        setError(error instanceof Error ? error.message : 'An error occurred');
-      }
-    };
-
-    fetchEmployees();
-  }, []);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
+        return response.json();
+      })
+      .then((data) => setEmployees(data))
+      .catch((err) => setError(err))
+  }, [])  
 
   return(
     <div>
