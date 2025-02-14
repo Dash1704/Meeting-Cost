@@ -27,14 +27,30 @@ export default function ShowEmployees() {
       .catch((err) => setError(err))
   }, [])  
 
+  const deleteEmployee = (id: number) => {
+    fetch(`http://localhost:8000/api/v1/employees/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if(!response.ok){
+          throw new Error('Failed to delete employee')
+        }
+        setEmployees((prevEmployees) => prevEmployees.filter((employee) => employee.id !== id))
+      })
+    .catch((err) => {
+      setError('Failed to delete employee')
+      console.error(err)
+    })
+  }
+
   return(
     <div>
       HERE ARE YOUR EMPLOYEES
-
       <ul>
         {employees.map((employee) => (
           <li key={employee.id}>
             {employee.first_name} {employee.last_name} - Salary: ${employee.salary} - Weekly Hours: {employee.weekly_hours}
+            - <button onClick={() => deleteEmployee(employee.id)}>Delete Employee</button>
           </li>
         ))}
       </ul>
