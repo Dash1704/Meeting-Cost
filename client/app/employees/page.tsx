@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface Employee {
   id: number;
@@ -14,6 +15,7 @@ interface Employee {
 export default function ShowEmployees() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     fetch('http://localhost:8000/api/v1/employees/')
@@ -50,7 +52,9 @@ export default function ShowEmployees() {
         {employees.map((employee) => (
           <li key={employee.id}>
             {employee.first_name} {employee.last_name} - Salary: ${employee.salary} - Weekly Hours: {employee.weekly_hours}
-            - <button onClick={() => deleteEmployee(employee.id)}>Delete Employee</button>
+              <button onClick={() => deleteEmployee(employee.id)}>Delete Employee</button>
+              <button onClick={() => router.push(`/updateEmployee/${employee.id}`)}>Update</button>
+              
           </li>
         ))}
       </ul>
