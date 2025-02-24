@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Header from '../components/header/header'
 
 interface Meeting {
   id: number,
@@ -40,6 +41,12 @@ export default function meetingHistory() {
 
   return(
     <div>
+      <Header
+              firstLink='/'
+              firstText='Home'
+              secondLink='/employees'
+              secondText='Employees'
+            />
     <div>
       This is the meeting history Page
       {meetings.map((meeting) => (

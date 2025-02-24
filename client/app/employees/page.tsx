@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Header from '../components/header/header'
 
 interface Employee {
   id: number;
@@ -46,7 +47,15 @@ export default function ShowEmployees() {
   }
 
   return(
+
     <div>
+      <Header
+        firstLink='/'
+        firstText='Home'
+        secondLink='/meetingHistory'
+        secondText='Meetings'
+      />
+  
       HERE ARE YOUR EMPLOYEES
       <ul>
         {employees.map((employee) => (
